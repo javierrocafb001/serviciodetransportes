@@ -5,7 +5,7 @@ Ext.Loader.setConfig({
 Ext.Loader.setPath('Ext.ux.*', '/ux/');
 
 Ext.websocket = Ext.create ('Ext.ux.WebSocket', {
-        url: 'wss://192.168.1.54:8080',
+        url: 'ws://192.168.1.54:8080',
         communicationType: 'event',
 	keepUnsentMessages: true,
 	autoReconnect: true,

@@ -16,7 +16,7 @@ Ext.define('Admin.store.units.Company', {
     }, proxy: {
      type: 'websocket' ,
      storeId: 'pilotsdata',
-     url: 'wss://192.168.1.54:8080',
+     url: 'ws://192.168.1.54:8080',
      communicationType: 'event',
      keepUnsentMessages: true,
      autoReconnect: true,
@@ -24,7 +24,7 @@ Ext.define('Admin.store.units.Company', {
      extraParams: { store: 'pilotsdata' }, 
      reader: {
 		type: 'json' ,
-		root: 'data'
+		rootProperty: 'data'
 	}
     }
 

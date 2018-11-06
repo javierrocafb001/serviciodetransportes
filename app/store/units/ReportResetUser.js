@@ -8,7 +8,7 @@ Ext.define('Admin.store.units.ReportResetUser.js', {
     proxy: {
 		type: 'websocket' ,
 		storeId: 'reportresetuser',
-                url: 'wss://192.168.1.54:8080',
+                url: 'ws://192.168.1.54:8080',
                 communicationType: 'event',
 	        keepUnsentMessages: true,
 	        autoReconnect: true,
@@ -16,7 +16,7 @@ Ext.define('Admin.store.units.ReportResetUser.js', {
 	        extraParams: { store: 'reportresetuser' }, 
 		reader: {
 			type: 'json' ,
-			root: 'data'
+			rootProperty: 'data'
 		}
     }
 

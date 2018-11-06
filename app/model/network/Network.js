@@ -1,10 +1,10 @@
 Ext.define('Admin.model.network.Network', {
     extend: 'Admin.model.Base',
     fields: ['_id', 'aboard', 'charged'] ,
-	proxy: {
+    proxy: {
 		type: 'websocket' ,
 		storeId: 'networkData',
-                url: 'wss://192.168.1.54:8080',
+                url: 'ws://192.168.1.54:8080',
                 communicationType: 'event',
 	        keepUnsentMessages: true,
 	        autoReconnect: true,
@@ -12,7 +12,7 @@ Ext.define('Admin.model.network.Network', {
 		extraParams: { store: 'networkData', timeelapsed: Ext.Date.format(new Date(Date.now() - 3600000), 'Y/m/d H:i:s'), unit: localStorage.getItem('unit'), route: localStorage.getItem('route'), company: localStorage.getItem('company'), position: localStorage.getItem('position') }, 
 		reader: {
 			type: 'json' ,
-			root: 'data'
+			rootProperty: 'data'
 		}
 	}
   

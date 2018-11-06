@@ -8,7 +8,7 @@ Ext.define('Admin.store.units.ReportPerCost', {
     proxy: {
 		type: 'websocket' ,
 		storeId: 'reportpercost',
-                url: 'wss://192.168.1.54:8080',
+                url: 'ws://192.168.1.54:8080',
                 communicationType: 'event',
 	        keepUnsentMessages: true,
 	        autoReconnect: true,
@@ -16,7 +16,7 @@ Ext.define('Admin.store.units.ReportPerCost', {
 	        extraParams: { store: 'reportpercost' }, 
 		reader: {
 			type: 'json' ,
-			root: 'data'
+			rootProperty: 'data'
 		}
     }
  

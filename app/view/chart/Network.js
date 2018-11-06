@@ -18,7 +18,7 @@ Ext.define('Admin.view.chart.Network', {
           Ext.data.StoreManager.lookup('networkData').load();
           Ext.getCmp('cpmtime').setHtml("actualizado: " + Ext.Date.format(new Date(), 'Y/m/d H:i:s'));
           e = Ext.data.StoreManager.lookup('networkData');
-            
+           console.log(e); 
 		if (e.getCount()) {
                 i = this.chartTaskRunner;
                 if (!i) {

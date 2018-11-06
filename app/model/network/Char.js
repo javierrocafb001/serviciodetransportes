@@ -4,7 +4,7 @@ Ext.define('Admin.model.network.Char', {
 	proxy: {
 		type: 'websocket' ,
 		storeId: 'charData',
-                url: 'wss://192.168.1.54:8080',
+                url: 'ws://192.168.1.54:8080',
                 communicationType: 'event',
 	        keepUnsentMessages: true,
 	        autoReconnect: true,
@@ -12,7 +12,7 @@ Ext.define('Admin.model.network.Char', {
 		extraParams: { store: 'charData', timeelapsed: Ext.Date.format(new Date(Date.now() - 3600000), 'Y/m/d H:i:s'), unit: localStorage.getItem('unit'), route: localStorage.getItem('route'), company: localStorage.getItem('company'), position: localStorage.getItem('position') }, 
 		reader: {
 			type: 'json' ,
-			root: 'data'
+			rootProperty: 'data'
 		}
 	}
   

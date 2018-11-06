@@ -10,7 +10,7 @@
 	             }  	
 
 var websocket = require('ws');
-var public = application.path.join(__dirname, '${ext.dir}/build/examples/admin-dashboard');
+var public = application.path.join(__dirname, '/');
 var app = application.middleware();
 
 app.get('/', function(req, res) {
@@ -976,6 +976,7 @@ cursor = collection.aggregate([{
          break;
 
          case 'networkData':
+			     console.log(message.data.position);
          application.database.connect(url, function(err, db) {
          if (err){ console.log(err) }
          var dbo = db.db('test');
@@ -995,7 +996,7 @@ cursor = collection.aggregate([{
          dbo.collection('inform').find({ status: 'closed', calcdate: { $gte: new Date(message.data.timeelapsed)  }, unit: message.data.unit, route: message.data.route, company: message.data.company }).toArray(function(err, result) {
          if (err){ }
             if(ws.readyState === websocket.OPEN) {
-  	    ws.send(JSON.stringify({
+	    ws.send(JSON.stringify({
                 event: 'read',
                 data: result
             }));}

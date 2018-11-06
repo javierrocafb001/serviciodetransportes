@@ -8,7 +8,7 @@ Ext.define('Admin.store.units.ReportCumulativeUnit', {
     proxy: {
 		type: 'websocket' ,
 		storeId: 'reportcumulativeunit',
-                url: 'wss://192.168.1.54:8080',
+                url: 'ws://192.168.1.54:8080',
                 communicationType: 'event',
 	        keepUnsentMessages: true,
 	        autoReconnect: true,
@@ -16,7 +16,7 @@ Ext.define('Admin.store.units.ReportCumulativeUnit', {
 	        extraParams: { store: 'reportcumulativeunit' }, 
 		reader: {
 			type: 'json' ,
-			root: 'data'
+			rootProperty: 'data'
 		}
     }
 

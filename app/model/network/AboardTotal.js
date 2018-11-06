@@ -4,7 +4,7 @@ Ext.define('Admin.model.network.AboardTotal', {
 	proxy: {
 		type: 'websocket' ,
 		storeId: 'aboardTotalData',
-                url: 'wss://192.168.1.54:8080',
+                url: 'ws://192.168.1.54:8080',
                 communicationType: 'event',
 	        keepUnsentMessages: true,
 	        autoReconnect: true,
@@ -12,7 +12,7 @@ Ext.define('Admin.model.network.AboardTotal', {
 		extraParams: { store: 'aboardTotalData', timeelapsed: Ext.Date.format(new Date(), 'Y/m/d H:i:s'), unit: localStorage.getItem('unit'), route: localStorage.getItem('route'), company: localStorage.getItem('company'), position: localStorage.getItem('position') }, 
 		reader: {
 			type: 'json' ,
-			root: 'data'
+			rootProperty: 'data'
 		}
 	}
 });
