@@ -1,6 +1,6 @@
 	var application = {
 		middleware: require('express'),
-	        https: require('https'),
+	        https: require('http'),
 		fs: require('fs'),
    		cron: require('node-cron'),
 		geodist: require('geodist'),
@@ -34,10 +34,7 @@ if(process.env.OPENSHIFT_MONGODB_DB_URL){
   url = process.env.OPENSHIFT_MONGODB_DB_URL + 'test';
 }
 
-const server = application.https.createServer({
-  cert: application.fs.readFileSync('./cert.pem', 'utf8'),
-  key: application.fs.readFileSync('./key.pem', 'utf8')
-}, app);
+const server = application.http.createServer(app);
 const wss = new application.websocketserver({ server });
 
 wss.on('connection', function (ws) {
