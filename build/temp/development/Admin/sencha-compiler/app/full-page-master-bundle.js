@@ -1,2 +1,2 @@
 // @tag full-page
-// @require /home/administrator/modularapp/app.js
+// @require /home/administrator/serviciodetransportes/app.js

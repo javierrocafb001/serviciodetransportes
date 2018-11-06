@@ -976,29 +976,28 @@ cursor = collection.aggregate([{
          break;
 
          case 'networkData':
-			     console.log(message.data.position);
          application.database.connect(url, function(err, db) {
          if (err){ console.log(err) }
          var dbo = db.db('test');
 	 if(message.data.position === 'administrador' || message.data.position === 'control de garita'){
-          dbo.collection('inform').find({ status: 'closed', calcdate: { $gte: new Date(message.data.timeelapsed)  } }).toArray(function(err, result) {
+          dbo.collection('inform').find({  calcdate: { $gte: new Date(message.data.timeelapsed)  } }).toArray(function(err, res) {
          if (err){ }
             if(ws.readyState === websocket.OPEN) {
-  	    ws.send(JSON.stringify({
+		    ws.send(JSON.stringify({
                 event: 'read',
-                data: result
+                data: res
             }));}
 		 db.close();
 		 return void 0;
           });
 
 	 } else {	 
-         dbo.collection('inform').find({ status: 'closed', calcdate: { $gte: new Date(message.data.timeelapsed)  }, unit: message.data.unit, route: message.data.route, company: message.data.company }).toArray(function(err, result) {
+         dbo.collection('inform').find({ calcdate: { $gte: new Date(message.data.timeelapsed) }, status: 'closed' , unit: message.data.unit, route: message.data.route, company: message.data.company }).toArray(function(err, res) {
          if (err){ }
             if(ws.readyState === websocket.OPEN) {
 	    ws.send(JSON.stringify({
                 event: 'read',
-                data: result
+                data: res
             }));}
 		 db.close();
 		 return void 0;
