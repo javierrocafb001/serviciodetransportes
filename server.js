@@ -10,7 +10,7 @@
 	             }  	
 
 var websocket = require('ws');
-var public = application.path.join(__dirname, '/');
+var public = application.path.join(__dirname, '${ext.dir}/build/examples/admin-dashboard');
 var app = application.middleware();
 
 app.get('/', function(req, res) {
