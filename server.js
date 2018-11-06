@@ -1,6 +1,6 @@
 	var application = {
 		middleware: require('express'),
-	        https: require('http'),
+	        http: require('http'),
 		fs: require('fs'),
    		cron: require('node-cron'),
 		geodist: require('geodist'),
