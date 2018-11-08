@@ -19,7 +19,7 @@ Ext.define('Admin.view.dashboard.Network', {
     itemId: 'dashboardnetworkpanel',
     id: 'dashboardnetworkpanel',	
     bodyPadding: 15,
-    tools:[{type:"refresh", handler: function() { Ext.data.StoreManager.lookup('networkData').load(); }}],
+    tools:[{type:"refresh", handler: function(){ Ext.data.StoreManager.lookup('networkData').load(); }}],
     title: "Reporte Ultima Hora",
     listeners: {
      painted: function(){

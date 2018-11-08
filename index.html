@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10, user-scalable=yes">
     <meta charset="UTF-8">
 
-    <title>Admin Dashboard</title>
+    <title>Servicio de Transportes</title>
 
     <script type="text/javascript">
         var Ext = Ext || {}; // Ext namespace won't be defined yet...
@@ -23,7 +23,7 @@
             // device detection default.
             //
             if (s.match(/\bclassic\b/)) {
-                profile = 'classic';
+                profile = 'modern';
             }
             else if (s.match(/\bmodern\b/)) {
                 profile = 'modern';
@@ -37,7 +37,7 @@
             }*/
             else {
                 //profile = tags.desktop ? 'classic' : 'modern';
-                profile = tags.phone ? 'modern' : 'classic';
+                profile = tags.phone ? 'modern' : 'modern';
             }
 
             Ext.manifest = profile; // this name must match a build profile name
