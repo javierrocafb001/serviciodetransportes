@@ -86,7 +86,7 @@ Ext.define('Admin.view.main.MainController', {
             text: "Control de Garita",
             iconCls: "x-fa fa-lightbulb-o",
             rowCls: "nav-tree-badge",
-            viewType: "reportcontrol",
+            viewType: "reporttotalgate",
             leaf: true
         },{
             text: "Salir del Sistema",
@@ -139,7 +139,7 @@ Ext.define('Admin.view.main.MainController', {
             text: "Control de Garita",
             iconCls: "x-fa fa-lightbulb-o",
             rowCls: "nav-tree-badge",
-            viewType: "reportcontrol",
+            viewType: "reporttotalgate",
             leaf: true
         }, {
             text: "Salir del Sistema",
@@ -191,7 +191,7 @@ Ext.define('Admin.view.main.MainController', {
             text: "Control de Garita",
             iconCls: "x-fa fa-lightbulb-o",
             rowCls: "nav-tree-badge",
-            viewType: "reportcontrol",
+            viewType: "reporttotalgate",
             leaf: true
         }, {
             text: "Salir del Sistema",
