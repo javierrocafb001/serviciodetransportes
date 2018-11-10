@@ -127,6 +127,7 @@ $include-admin-view-email-friendslistviewmodel: dynamic(true);;
 $include-admin-view-email-inbox: dynamic(true);;
 $include-admin-view-email-menu: dynamic(true);;
 $include-admin-view-email-menuviewmodel: dynamic(true);;
+$include-admin-view-email-reportcontrolmodel: dynamic(true);;
 $include-admin-view-email-window: dynamic(true);;
 $include-admin-view-forms-specialoffer: dynamic(true);;
 $include-admin-view-forms-wizardform: dynamic(true);;
