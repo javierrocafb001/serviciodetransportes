@@ -72,8 +72,10 @@ Ext.define('Admin.view.charts.ChartGame', {
 	        } else { Ext.Msg.confirm("Reportar Pasajeros", "Estas a punto de reportar que subieron " + '<b>' + this.down('#counterlabel').getValue() + '</b>' + " pasajeros, deseas continuar?", function(btn){ 
 			     if(btn === 'yes'){
                              if(localStorage.getItem('route') !== 'undefined'){
- 			     Ext.websocket.send('report', { data: { id: localStorage.getItem('iduser'), user: localStorage.getItem('user'), firstname: localStorage.getItem('firstname'), firstlastname: localStorage.getItem('firstlastname'), route: localStorage.getItem('route'), company: localStorage.getItem('company'), unit: localStorage.getItem('unit'), price: localStorage.getItem('priceofroute'), number: this.down('#counterlabel').getValue(), position: localStorage.getItem('position'), reporttime: Ext.Date.format(new Date(), 'Y/m/d'), time: Ext.Date.format(new Date(), 'Y/m/d H:i:s')}});
-			     Ext.websocket.send('inform', { data: { unit: localStorage.getItem('unit'), route: localStorage.getItem('route'), company: localStorage.getItem('company'), price: localStorage.getItem('priceofroute'), aboard: this.down('#counterlabel').getValue(), status: 'open', reporttime: Ext.Date.format(new Date(), 'Y/m/d'), time: Ext.Date.format(new Date(), 'Y/m/d H:i:s') } });   
+Ext.websocket.send('inform', { data: { unit: localStorage.getItem('unit'), route: localStorage.getItem('route'), company: localStorage.getItem('company'), price: localStorage.getItem('priceofroute'), aboard: this.down('#counterlabel').getValue(), status: 'open', reporttime: Ext.Date.format(new Date(), 'Y/m/d'), time: Ext.Date.format(new Date(), 'Y/m/d H:i:s') } }); 
+
+				     Ext.websocket.send('report', { data: { id: localStorage.getItem('iduser'), user: localStorage.getItem('user'), firstname: localStorage.getItem('firstname'), firstlastname: localStorage.getItem('firstlastname'), route: localStorage.getItem('route'), company: localStorage.getItem('company'), unit: localStorage.getItem('unit'), price: localStorage.getItem('priceofroute'), number: this.down('#counterlabel').getValue(), position: localStorage.getItem('position'), reporttime: Ext.Date.format(new Date(), 'Y/m/d'), time: Ext.Date.format(new Date(), 'Y/m/d H:i:s')}});
+			       
 			     this.down('#counterlabel').setValue(0);
 			     this.down('#counterlabel').setText('Numero de Pasajeros: ' + 0);
                              } else {

@@ -27,7 +27,9 @@
 	reportpercompany: 'Admin.view.tablet.email.ReportPerCompany',
         reportperroute: 'Admin.view.tablet.email.ReportPerRoute',
 	compose: "Admin.view.tablet.email.Compose",
-        searchusers: "Admin.view.tablet.search.Users"
+        searchusers: "Admin.view.tablet.search.Users",
+        searchcompanies: "Admin.view.tablet.companies.Companies"
+
     },
     isActive: function() {
         return !Ext.platformTags.phone

@@ -14,7 +14,7 @@ var public = application.path.join(__dirname, '/');
 var app = application.middleware();
 
 app.get('/', function(req, res) {
-    res.sendFile(application.path.join(public, 'index.html'));
+    res.sendFile(application.path.join(public, '${ext.dir}/build/examples/admin-dashboard/'));
     return void 0;
 });
 
@@ -49,6 +49,30 @@ wss.on('connection', function (ws) {
         
         var event = message.event;
         switch(event){
+         case 'searchemployees':
+         application.database.connect(url, function(err, db) {
+         if (err){ };
+         var dbo = db.db('test');
+         dbo.collection('users').find({ user: message.data.user  }).project({ key: 0 }).toArray(function(err, result) {
+         if (err){ console.log(err); }
+            if(ws.readyState === websocket.OPEN) {
+  	    ws.send(JSON.stringify({
+                event: 'searchemployees' ,
+                data: {
+			data: result,
+                        success: true
+                }
+            }));
+	    }
+ 
+		 db.close();
+		 return void 0;
+          });
+          return void 0;
+          });
+
+	 break;
+
          case 'location':
          application.database.connect(url, function(err, db) {
          if (err) {  }
@@ -80,7 +104,7 @@ wss.on('connection', function (ws) {
          break;
 	 case 'read':
 	
-	     switch(message.data.store) {
+	 switch(message.data.store) {
 	 case 'timelinestore':
          application.database.connect(url, function(err, db) {
          if (err) { console.log(err); }
@@ -169,8 +193,32 @@ wss.on('connection', function (ws) {
         return void 0;
         });
 
-	      break;
-	     case 'searchusers':
+	 break;
+	 case 'searchcompanies':
+         application.database.connect(url, function(err, db) {
+         if (err){ };
+         var dbo = db.db('test');
+         dbo.collection('company').find({}).toArray(function(err, result) {
+         if (err){ console.log(err); }
+            if(ws.readyState === websocket.OPEN) {
+  	    ws.send(JSON.stringify({
+                event: 'read' ,
+                data: {
+			data: result,
+                        success: true
+                }
+            }));
+	    }
+ 
+		 db.close();
+		 return void 0;
+          });
+          return void 0;
+          });
+
+	 break;
+
+	 case 'searchusers':
          application.database.connect(url, function(err, db) {
          if (err){ };
          var dbo = db.db('test');
@@ -193,11 +241,12 @@ wss.on('connection', function (ws) {
           });
 
 	 break;
+        
          case 'pilotsdata':
          application.database.connect(url, function(err, db) {
          if (err){  }
          var dbo = db.db('test');
-         dbo.collection('users').find({ position: { '$ne': message.data.position } }).project({ key: 0 }).toArray(function(err, result) {
+         dbo.collection('users').find({ position: message.data.position  }).project({ key: 0 }).toArray(function(err, result) {
          if (err){ console.log(err); }
             if(ws.readyState === websocket.OPEN) {
   	    ws.send(JSON.stringify({
@@ -229,11 +278,11 @@ wss.on('connection', function (ws) {
        return void 0;
        });
 	 break;
-         case 'company':
+         case 'companyitems':
          application.database.connect(url, function(err, db) {
          if (err){  }
          var dbo = db.db('test');
-         dbo.collection('company').find({ }).toArray(function(err, result) {
+         dbo.collection('company').find({}).toArray(function(err, result) {
          if (err){ console.log(err); }
          if(ws.readyState === websocket.OPEN) {
   	    ws.send(JSON.stringify({
@@ -261,7 +310,7 @@ wss.on('connection', function (ws) {
          if(message.data.unitnumber){
 
 
-cursor = collection.aggregate([{ 
+         cursor = collection.aggregate([{ 
 	          $match: { calcdate: { $gte: reportdate }, unit: message.data.unitnumber }
 	          },{
                   $group: {
@@ -362,6 +411,7 @@ cursor = collection.aggregate([{
 		    }
 		    }]).toArray(function(err, docs) {
                        if(ws.readyState === websocket.OPEN) {
+			       console.log(docs);
                        ws.send(JSON.stringify({
                        event: 'read',
                        data: docs
@@ -501,13 +551,12 @@ cursor = collection.aggregate([{
             console.log(message.data.price);
 		 var calc = message.data.price
 	    cursor = collection.aggregate([{ 
-	          $match: { calcdate: { $gte: reportdate } }
+	          $match: { calcdate: { $gte: reportdate }, company: message.data.company }
 	          },{
                   $group: {
 		       _id: { reportdate:"$reportdate", unit: "$unit", route: "$route", company: "$company", price: '$price' },
                     aboard: { $sum: "$aboard" },
                     charged: { $sum: "$charged" },
-                    totalprice: { $max: "$price" },
                     count: { $sum: 1 }
                        }
                     },{
@@ -515,7 +564,7 @@ cursor = collection.aggregate([{
 			reportdate: '$_id.reportdate',  
 			company: '$_id.company',
 			 unit: '$_id.unit',
-			    price: '$totalprice',
+			price: message.data.price,
 			  route: '$_id.route',
 			aboard: '$aboard',
 		       charged: '$charged',
@@ -593,7 +642,6 @@ cursor = collection.aggregate([{
 		    _id: { unit: "$unit" },
                     aboard: { $sum: "$aboard" },
                     charged: { $sum: "$charged" },
-                    totalprice: { $max: "$price" },
                     count: { $sum: 1 }
                        }
                     },{
@@ -601,12 +649,12 @@ cursor = collection.aggregate([{
 			unit: '$_id.unit',
 			 unit: '$_id.unit',
 			  route: '$_id.route',
-			   price: '$totalprice', 
 			    aboard: '$aboard',
 		       charged: '$charged',
 			   _id: 0
 		    }
 		    }]).toArray(function(err, docs) {
+			    console.log(docs)
                        if(ws.readyState === websocket.OPEN) {
 		       ws.send(JSON.stringify({
                        event: 'read',
@@ -723,16 +771,14 @@ cursor = collection.aggregate([{
 	 reportdate = new Date(message.data.reportdate); 
          reportdate.setDate(reportdate.getDate() - days);	
 	 reportdate.setHours(0,0,0,0);
-            console.log(message.data.price);
 		 var calc = message.data.price
 	    cursor = collection.aggregate([{ 
-	          $match: { calcdate: { $gte: reportdate } }
+	          $match: { calcdate: { $gte: reportdate }, company: message.data.company }
 	          },{
                   $group: {
 		    _id: { unit: "$unit", route: "$route", company: "$company" },
                     aboard: { $sum: "$aboard" },
                     charged: { $sum: "$charged" },
-                    totalprice: { $max: "$price" },
                     count: { $sum: 1 }
                        }
                     },{
@@ -740,12 +786,13 @@ cursor = collection.aggregate([{
 			company: '$_id.company',
 			 unit: '$_id.unit',
 			  route: '$_id.route',
-			  price: '$totalprice',
+			  price: message.data.price,
 			aboard: '$aboard',
 		       charged: '$charged',
 			   _id: 0
 		    }
 		    }]).toArray(function(err, docs) {
+			    console.log(docs);
                        if(ws.readyState === websocket.OPEN) {
 		       ws.send(JSON.stringify({
                        event: 'read',
@@ -1645,7 +1692,12 @@ dbo.collection('users').updateOne(query, newvalue, function(err, result) {
              dbo = db.db("test");
              query = { user: message.data.data.user };
              newvalue = { $set: {company: message.data.data.company } };
-        dbo.collection("users").updateOne(query, newvalue, function(err, res) {
+         
+         if(message.data.data.position === 'administrador'){
+         dbo.collection("company").findOne({ company: message.data.data.company }, function(err, res) {
+         newvalue = { $set: {company: message.data.data.company, price: res.price } };
+
+         dbo.collection("users").updateOne(query, newvalue, function(err, res) {
          if (err){ }
 		wss.clients.forEach(function each(client) {
                 if(client.readyState === websocket.OPEN) {
@@ -1653,6 +1705,19 @@ dbo.collection('users').updateOne(query, newvalue, function(err, result) {
                 }); 
 		db.close();
           });
+
+          });
+	 } else {
+
+         dbo.collection("users").updateOne(query, newvalue, function(err, res) {
+         if (err){ }
+		wss.clients.forEach(function each(client) {
+                if(client.readyState === websocket.OPEN) {
+		client.send(JSON.stringify({ event: 'updateclient' }));}
+                }); 
+		db.close();
+          });
+	 }
 	 });
 	 break;	
 	 case 'updaterecordroute':
@@ -1711,13 +1776,14 @@ dbo.collection('users').updateOne(query, newvalue, function(err, result) {
 	 return void 0;
 	 });
 	 break;
-         case 'priceofroute':
+         case 'updateprice':
          application.database.connect(url, function(err, db) {
          if (err){ }
 	 var dbo, newvalue;
          dbo = db.db("test");
+		 console.log(message.data.data.company);
          newvalue = { $set: { price: message.data.data.price } };
-         dbo.collection("users").updateMany({ }, newvalue, function(err, res) {
+         dbo.collection("company").updateOne({ company: message.data.data.company }, newvalue, function(err, res) {
          if (err){ }
 	 
          wss.clients.forEach(function each(client) {
@@ -1730,6 +1796,7 @@ dbo.collection('users').updateOne(query, newvalue, function(err, result) {
 	 return void 0;
 	 });
 	 break;
+
          case 'mainreportvalidator':
          wss.clients.forEach(function each(client) {
          if(client.readyState === websocket.OPEN) {

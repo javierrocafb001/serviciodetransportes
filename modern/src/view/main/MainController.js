@@ -254,6 +254,13 @@ Ext.define('Admin.view.main.MainController', {
             routeId: "searchresults",
             leaf: true
         },{
+            text: "Empresas",
+            iconCls: "x-fa fa-group",
+            rowCls: "nav-tree-badge",
+            viewType: "searchcompanies",
+            routeId: "searchcompanies",
+            leaf: true
+        },{
             text: "Posicion de Buses",
             iconCls: "x-fa fa-globe",
             rowCls: "nav-tree-badge",
@@ -341,9 +348,6 @@ Ext.define('Admin.view.main.MainController', {
     });	}
 
      break;
-     case 'garita de control':
-
-     break;
      default:
      Ext.data.StoreManager.lookup('NavigationTree').setRoot({
         expanded: true,
@@ -424,22 +428,15 @@ Ext.define('Admin.view.main.MainController', {
 	return void 0;	
 	}},{text:"Crear Administrador", handler: function() { this.actions.setItems({xtype: 'newaccountadminform'}) } },
 		{text:"Crear Usuario Garita", handler: function() { this.actions.setItems({xtype: 'newaccountgateform'}) } },
-		{text:"Precio del Pasaje", handler: function() { 
-	Ext.Msg.prompt("Precio del Pasaje", "Ingresa el Precio del Pasaje (En Numero por ejemplo 2.25):", function(btnText, sInput){
+		{text:'Buscar Empleado', handler: function(){
+		Ext.Msg.prompt("Busqueda de Empleados", "Ingresa el Usuario del Empleado:", function(btnText, sInput){
                 if(btnText === 'ok'){
-
-Ext.Msg.confirm("Cambiar Precio", "Estas a punto de cambiar el Precio del Pasaje Actualmente esta: " + localStorage.getItem('priceofroute') + " ,deseas continuar?", function(btn){
-                                          if(btn === 'yes'){
-                                          Ext.websocket.send('priceofroute', { data: { price: sInput } });
-                                          Admin.view.main.MainController.prototype.onResetForm.apply(this, arguments);
-                                          Admin.view.main.MainController.prototype.onCancelButton.apply(this, arguments);
-					  }
-            return void 0;
-            });
-	}
+	        Ext.websocket.send('searchemployees', { data: { user:  Ext.util.Format.lowercase(sInput) } });
+		}
             }, this);
-	
-	} }]);
+
+		
+		}}]);
      }
     },	
     onNavigationItemClick: function () {

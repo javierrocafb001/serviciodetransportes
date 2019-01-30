@@ -13,7 +13,9 @@ Ext.define('Admin.view.tablet.email.ReportTotalCost', {
 
 		Ext.Msg.prompt("Numero de Dias", "Ingresa el Numero de dias Atras, del Reporte que deseas Ver, por ejemplo 0 esto es igual a hoy:", function(btnText, sInput){
                 if(btnText === 'ok'){
-                Ext.data.StoreManager.lookup('reportcumulativecost').getProxy().extraParams = { store: 'reportcumulativecost', days: sInput, reportdate: Ext.Date.format(new Date(), 'Y/m/d') }; 
+                Ext.data.StoreManager.lookup('reportcumulativecost').getProxy().extraParams = { store: 'reportcumulativecost', 
+		days: sInput, reportdate: Ext.Date.format(new Date(), 'Y/m/d'), 
+		company: localStorage.getItem('company'), price: localStorage.getItem('priceofroute') }; 
                 Ext.data.StoreManager.lookup('reportcumulativecost').load();
 		}
             }, this);

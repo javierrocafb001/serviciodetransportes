@@ -1,22 +1,22 @@
-Ext.define('Admin.store.units.Company', {
+Ext.define('Admin.store.companies.Companies', {
     extend: 'Ext.data.Store',
-    alias: 'store.company',
-    model: "Admin.model.units.Company",
-    pageSize: 20,
-    autoLoad: false,
-    storeId: 'company',
+    alias: 'store.searchcompanies',
+    model: "Admin.model.companies.Company",
+    storeId: 'searchcompanies',
     proxy: {
 		type: 'websocket' ,
-		storeId: 'company',
+		storeId: 'searchcompanies',
                 url: 'ws://192.168.1.54:8080',
                 communicationType: 'event',
 	        keepUnsentMessages: true,
 	        autoReconnect: true,
 	        autoReconnectInterval: 1000,
-	        extraParams: { store: 'companyitems' }, 
+	        extraParams: { store: 'searchcompanies' }, 
 		reader: {
 			type: 'json' ,
-			rootProperty: 'data'
+			root: 'data'
 		}
-    }
+    },
+    autoLoad: true
 });
+

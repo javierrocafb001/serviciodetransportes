@@ -15,11 +15,11 @@ Ext.define('Admin.view.tablet.email.ReportTotalCompany', {
             var passedvalue = sInput;
 	        Ext.Msg.prompt("Numero de Dias", "Ingresa el Numero de dias Atras, del Reporte que deseas Ver, por ejemplo 0 esto es igual a hoy:", function(btnText, sInput){
                 if(btnText === 'ok'){
-                if(sInput <= 30){
+                if(sInput <= 365){
                 Ext.data.StoreManager.lookup('reportcumulativecompany').getProxy().extraParams = { store: 'reportcumulativecompany', days: sInput, company: passedvalue, reportdate: Ext.Date.format(new Date(), 'Y/m/d') }; 
                 Ext.data.StoreManager.lookup('reportcumulativecompany').load();
 	       } else {
-		Ext.Msg.alert('Dias Atras', 'El Reporte puede verse en un Maximo de 30 dias, escoja un numero de dias Menor.'); 
+		Ext.Msg.alert('Dias Atras', 'El Reporte puede verse en un Maximo de 365 dias, escoja un numero de dias Menor.'); 
 		}
 		}
             }, this);

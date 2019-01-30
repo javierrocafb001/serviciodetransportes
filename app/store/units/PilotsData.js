@@ -1,4 +1,4 @@
-Ext.define('Admin.store.units.Company', {
+Ext.define('Admin.store.units.PilotsData', {
     extend: 'Ext.data.Store',
     alias: 'store.pilotsdata',
     model: "Admin.model.units.PilotsData",
@@ -8,7 +8,13 @@ Ext.define('Admin.store.units.Company', {
     listeners: {
     beforeload: function(){
     if(Ext.getCmp('gridusers').getSelection()){
-    var position = Ext.getCmp('gridusers').getSelection().data.position
+    var position;
+    if(Ext.getCmp('gridusers').getSelection().data.position === 'ayudante'){
+    position = 'piloto'	    
+    } else {
+    position = 'ayudante'    
+    }
+
     this.getProxy().extraParams = { store: 'pilotsdata', position: position }; 
 
      }

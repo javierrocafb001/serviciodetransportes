@@ -35,6 +35,13 @@ Ext.websocket = Ext.create ('Ext.ux.WebSocket', {
 	   case 'testamessage':
            Ext.websocket.send('something', {a: 'foo' });
 	   break;		   
+	   case 'searchemployees':
+           Ext.data.StoreManager.lookup('searchusers').loadRawData(msg.data.data);
+	   break;	 
+           case 'companyitems':
+			   console.log(msg.data.data);
+           Ext.data.StoreManager.lookup('company').loadRawData(msg.data.data);
+	   break;	
            case 'aboardhourindicator':
 	   Ext.getCmp('aboardhourindicator').setHtml(msg.data.count);
 	   return void 0;		   

@@ -1,11 +1,11 @@
-Ext.define('Admin.view.email.Actions', {
+Ext.define('Admin.view.email.UnitRoutes', {
     extend: 'Ext.ActionSheet',
     xtype: 'unitroutes',
     scrollable: "y",
        viewModel: {
         type: "unitroutes"
         },
-        items: [{
+	items: [{
         xtype: "grid",
         title: 'Listado de Rutas',
         bind: {
